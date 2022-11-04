@@ -14,11 +14,11 @@ def generates_pin(password_length):
     pin = ""
     for _ in range(password_length):
         pin += str(random.randint(0, 9))
-    print(f"Your PIN is: {pin}\n")
     with open(
-        "Password_Manager\\pin_passwords.txt", "a", encoding=("UTF-8")
+        "Passwords_Manager\\pin_passwords.txt", "a", encoding=("UTF-8")
     ) as generated_passwords:
         generated_passwords.write(f"Your generated PIN is: {pin}\n")
+    print(f"Your PIN is: {pin}\n")
 
 
 def generates_password(password_length):
@@ -30,11 +30,11 @@ def generates_password(password_length):
     password = ""
     for _ in range(password_length):
         password += random.choice(characters)
-    print(f"Your password is: {password}\n")
     with open(
-        "Password_Manager\\pin_passwords.txt", "a", encoding=("UTF-8")
+        "Passwords_Manager\\pin_passwords.txt", "a", encoding=("UTF-8")
     ) as generated_passwords:
         generated_passwords.write(f"Your generated password is: {password}\n")
+    print(f"Your password is: {password}\n")
 
 
 if __name__ == "__main__":
