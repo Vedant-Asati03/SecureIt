@@ -6,7 +6,7 @@ import random
 import string
 import sys
 import pyperclip
-from sign_in import create_account, check_user
+from sign_in import create_account, check_existing_user, validate_email
 
 
 def main():
@@ -62,8 +62,15 @@ def generates_password(password_length):
 
 
 if __name__ == "__main__":
-    email = input("Please, Enter your email_id: ")
-    try:
-        check_user(email)
-    except:
+    ask_user = input("Do you want to login [y/n]: ")
+
+    if ask_user == "y":
+        email = input("Please, Enter your email_id: ")
+        validate_email(email)
+        try:
+            check_existing_user(email)
+        except:
+            main()
+
+    elif ask_user == "n":
         main()
