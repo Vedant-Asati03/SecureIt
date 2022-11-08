@@ -6,7 +6,7 @@ import random
 import string
 import sys
 import pyperclip
-from sign_in import create_account, check_existing_user, validate_email
+from sign_in import create_account, check_existing_user
 
 
 def main():
@@ -21,7 +21,7 @@ def main():
 
     if password_len < 8:
         print("Read instructions carefully!")
-        sys.exit()
+        sys.exit(1)
 
     if password_type == "1":
         generates_pin(password_len)
@@ -33,16 +33,16 @@ def main():
         print("Invalid input!")
 
 
-def generates_pin(password_length):
+def generates_pin(pin_length):
     """
     This function Generates pin
     """
     pin = ""
-    for _ in range(password_length):
+    for _ in range(pin_length):
         pin += str(random.randint(0, 9))
     pyperclip.copy(pin)
     print(f"Your PIN is: {pin}\n\nNote: Your PIN is copied to your clipboard\n")
-    create_account(email, pin)
+    create_account(username, pin)
 
 
 def generates_password(password_length):
@@ -58,17 +58,16 @@ def generates_password(password_length):
     print(
         f"Your password is: {password}\n\nNote: Your password is copied to your clipboard\n"
     )
-    create_account(email, password)
+    create_account(username, password)
 
 
 if __name__ == "__main__":
     ask_user = input("Do you want to login [y/n]: ")
 
     if ask_user == "y":
-        email = input("Please, Enter your email_id: ")
-        validate_email(email)
+        username = input("Please, Enter your email_id: ")
         try:
-            check_existing_user(email)
+            check_existing_user(username)
         except:
             main()
 
