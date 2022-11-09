@@ -5,7 +5,9 @@ password generator
 import random
 import string
 import sys
+import json
 import pyperclip
+import cryptocode
 from sign_in import create_account, check_existing_user
 
 
@@ -42,7 +44,7 @@ def generates_pin(pin_length):
         pin += str(random.randint(0, 9))
     pyperclip.copy(pin)
     print(f"Your PIN is: {pin}\n\nNote: Your PIN is copied to your clipboard\n")
-    create_account(username, pin)
+    create_account(username, cryptocode.encrypt(pin, "3284528345323"))
 
 
 def generates_password(password_length):
@@ -58,14 +60,25 @@ def generates_password(password_length):
     print(
         f"Your password is: {password}\n\nNote: Your password is copied to your clipboard\n"
     )
-    create_account(username, password)
+    create_account(username, cryptocode.encrypt(password, "3284528345323"))
+
+
+def view_userdata(command:str):
+    """
+    this function lets user to view their saved passwords
+    """
+    user_data = input("Enter username: ").removesuffix(".json")
+    with open(("users\\" + user_data + ".json"), "r", encoding="UTF-8") as user:
+        fetch_password = json.load(user)
+        decrypted_password = cryptocode.decrypt(fetch_password[user_data], "3284528345323")
+        print(decrypted_password)
 
 
 if __name__ == "__main__":
-    ask_user = input("Do you want to login [y/n]: ")
+    ask_user = input("Do you want to login[y/n] or view existing user[v]: ")
 
     if ask_user == "y":
-        username = input("Please, Enter your email_id: ")
+        username = input("Enter your username: ")
         try:
             check_existing_user(username)
         except:
@@ -73,3 +86,9 @@ if __name__ == "__main__":
 
     elif ask_user == "n":
         main()
+
+    elif ask_user == "v":
+        try:
+            view_userdata("v")
+        except:
+            print("User doesn't exits")
