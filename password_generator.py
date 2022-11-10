@@ -90,16 +90,14 @@ def view_userdata(_: str):
         decrypted_password = cryptocode.decrypt(fetch_password, "3284528345323")
         copy = console.input(
             Text(
-                f"Your password is: {decrypted_password}\nPress 'c' to copy this password: ",
-                style="#B4B897",
+                f"\nYour password is: {decrypted_password}\nPress 'c' to copy this password: ",
+                style="u #DFDFDE",
             )
         )
         match copy:
             case "c":
                 pyperclip.copy(decrypted_password)
-                return "copied"
-            case _:
-                sys.exit()
+                print("copied")
 
 
 if __name__ == "__main__":
@@ -110,7 +108,7 @@ if __name__ == "__main__":
 
         case "Y":
             username = console.input(
-                Text("Enter your username: ", style="#B4B897")
+                Text("Enter a username to continue: ", style="#B4B897")
             ).capitalize()
             try:
                 check_existing_user(username)
