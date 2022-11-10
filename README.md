@@ -16,7 +16,11 @@ This is a password manager to manage all your passwords and not only this, it ca
 
 # How to use
 
-./assets/HowToUse_clip.mp4
+
+
+https://user-images.githubusercontent.com/109758134/201096439-82fa6f47-56c6-48d7-bbdc-3a8064a6dd34.mp4
+
+
 
 # Installation
 
