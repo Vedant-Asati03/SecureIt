@@ -14,9 +14,9 @@ This is a password manager to manage all your passwords and not only this, it ca
 * Stores your credentials
 * Let's you view your credentials anytime
 
-<!-- # How to use
+# How to use
 
-Its simple to use -->
+![Its simple to use](./assets/HowToUse_clip.mp4)
 
 # Installation
 
