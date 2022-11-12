@@ -5,15 +5,19 @@ password generator
 import random
 import string
 import sys
-import json
 import pyperclip
 import cryptocode
 from rich.text import Text
 from rich.console import Console
-from sign_in import create_account, check_existing_user
+from sign_in import create_account, check_existing_user, view_userdata
 
 
 console = Console()
+
+# Generates a random Key
+KEY = ""
+for _ in range(10):
+    KEY += str(random.randint(0, 9))
 
 
 def main():
@@ -54,7 +58,7 @@ def generates_pin(pin_length):
     )
     match ask_user:
         case "Y":
-            create_account(username, cryptocode.encrypt(pin, "3284528345323"))
+            create_account(username, cryptocode.encrypt(pin, KEY), KEY)
 
 
 def generates_password(password_length):
@@ -73,43 +77,19 @@ def generates_password(password_length):
     )
     match ask_user:
         case "Y":
-            create_account(username, cryptocode.encrypt(password, "3284528345323"))
-
-
-def view_userdata(_: str):
-    """
-    this function lets user to view their saved passwords
-    """
-    user_data = (
-        console.input(Text("Enter username: ", style="#B4B897"))
-        .removesuffix(".json")
-        .capitalize()
-    )
-    with open(("users\\" + user_data + ".json"), "r", encoding="UTF-8") as user:
-        fetch_password = json.load(user)[user_data]
-        decrypted_password = cryptocode.decrypt(fetch_password, "3284528345323")
-        copy = console.input(
-            Text(
-                f"\nYour password is: {decrypted_password}\nPress 'c' to copy this password: ",
-                style="u #DFDFDE",
-            )
-        )
-        match copy:
-            case "c":
-                pyperclip.copy(decrypted_password)
-                print("copied")
+            create_account(username, cryptocode.encrypt(password, KEY), KEY)
 
 
 if __name__ == "__main__":
     ask_user = console.input(
         Text("Do you want to login[y/n] or view existing user[v]: ", style="#B4B897")
-    ).capitalize()
+    ).upper()
     match ask_user:
 
         case "Y":
             username = console.input(
                 Text("Enter a username to continue: ", style="#B4B897")
-            ).capitalize()
+            ).upper()
             try:
                 check_existing_user(username)
             except:
@@ -119,7 +99,19 @@ if __name__ == "__main__":
             main()
 
         case "V":
-            try:
-                view_userdata("V")
-            except:
-                console.print("User doesn't exits", style="#24A19C")
+            master_password = console.input(
+                Text("Enter master password to access data: ", style="#B4B897")
+            )
+            match master_password:
+                case "":
+                    try:
+                        user_account = (
+                            console.input(Text("Enter username: ", style="#B4B897"))
+                            .removesuffix(".csv")
+                            .upper()
+                        )
+                        view_userdata(user_account)
+                    except:
+                        console.print("User doesn't exits", style="#24A19C")
+                case _:
+                    sys.exit()
