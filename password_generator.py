@@ -9,7 +9,7 @@ import pyperclip
 import cryptocode
 from rich.text import Text
 from rich.console import Console
-from sign_in import create_account, check_existing_user, view_userdata
+from sign_in import create_account, check_existing_account, read_userdata
 
 
 console = Console()
@@ -25,23 +25,25 @@ def main():
     user interacts here
     """
 
-    console.print("Press 1 for PIN\nPress 2 for PASSWORD\n", style="#F8CB2E")
+    console.print("Write 1 for PIN\nWrite 2 for PASSWORD\n", style="#F8CB2E")
     console.print("Password length must be atleast 8 characters.\n", style="#FF1E00")
 
     password_type = console.input(
         Text("What type of password you want: ", style="#B4B897")
     )
-    password_len = int(console.input(Text("Length of password: ", style="#B4B897")))
+    password_length = int(console.input(Text("Length of password: ", style="#B4B897")))
 
-    if password_len < 8:
+    if password_length < 8:
         print("Read instructions carefully!")
         sys.exit(1)
 
-    if password_type == "1":
-        generates_pin(password_len)
+    match password_type:
 
-    elif password_type == "2":
-        generates_password(password_len)
+        case "1":
+            generates_pin(password_length)
+
+        case "2":
+            generates_password(password_length)
 
 
 def generates_pin(pin_length):
@@ -58,7 +60,7 @@ def generates_pin(pin_length):
     )
     match ask_user:
         case "Y":
-            create_account(username, cryptocode.encrypt(pin, KEY), KEY)
+            create_account(account_name, cryptocode.encrypt(pin, KEY), KEY)
 
 
 def generates_password(password_length):
@@ -77,7 +79,7 @@ def generates_password(password_length):
     )
     match ask_user:
         case "Y":
-            create_account(username, cryptocode.encrypt(password, KEY), KEY)
+            create_account(account_name, cryptocode.encrypt(password, KEY), KEY)
 
 
 if __name__ == "__main__":
@@ -87,15 +89,15 @@ if __name__ == "__main__":
     match ask_user:
 
         case "Y":
-            username = console.input(
-                Text("Enter a username to continue: ", style="#B4B897")
+            account_name = console.input(
+                Text("Enter a account_name to continue: ", style="#B4B897")
             ).upper()
             try:
-                check_existing_user(username)
+                check_existing_account(account_name)
             except:
                 main()
 
-        case "N":
+        case "N" | "":
             main()
 
         case "V":
@@ -104,14 +106,15 @@ if __name__ == "__main__":
             )
             match master_password:
                 case "":
+                    view_account = (
+                        (console.input(Text("Enter account_name: ", style="#B4B897")))
+                        .removesuffix(".csv")
+                        .upper()
+                    )
                     try:
-                        user_account = (
-                            console.input(Text("Enter username: ", style="#B4B897"))
-                            .removesuffix(".csv")
-                            .upper()
-                        )
-                        view_userdata(user_account)
+                        read_userdata(view_account)
                     except:
-                        console.print("User doesn't exits", style="#24A19C")
+                        console.print("Account not found", style="#CF0A0A")
+
                 case _:
-                    sys.exit()
+                    sys.exit(1)

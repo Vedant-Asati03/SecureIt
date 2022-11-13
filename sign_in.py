@@ -18,43 +18,58 @@ def main():
     """
 
 
-def create_account(account, password, key):
+def create_account(account_name: str, password: str, key: str):
     """
     creates account
     """
-    with open("users\\" + account + ".csv", "a", encoding="UTF-8") as user_data:
+    with open(
+        "C:\\Users\\lenovo\\accounts_passwordmanager\\" + account_name + ".csv",
+        "a",
+        encoding="UTF-8",
+    ) as user_data:
         # json.dump({username: password}, user_data, indent=4)
         structure = csv.writer(user_data)
-        structure.writerow([account, password, key])
+        structure.writerow([account_name, password, key])
         print("Successfull login")
         sys.exit()
 
 
-def check_existing_user(checkuser):
+def check_existing_account(account_name: str):
     """
     checks for existing users
     """
-    with open("users\\" + checkuser + ".csv", "r", encoding="UTF-8") as _:
-        print("A user already exists, Try a new email")
+    with open(
+        "C:\\Users\\lenovo\\accounts_passwordmanager\\" + account_name + ".csv",
+        "r",
+        encoding="UTF-8",
+    ) as _:
+        print("A account already exists, Try a new account_name")
 
 
-def view_userdata(account):
+def read_userdata(account_name: str):
     """
     this function lets user to view their saved passwords
     """
-    with open("users\\" + account + ".csv", "r", encoding="UTF-8") as user:
-        fetch_password = csv.reader(user)
-        decrypted_password = cryptocode.decrypt(fetch_password, csv.reader(user)[2])
-        copy = console.input(
-            Text(
-                f"\nYour password is: {decrypted_password}\nPress 'c' to copy this password: ",
-                style="u #DFDFDE"
+    with open(
+        "C:\\Users\\lenovo\\accounts_passwordmanager\\" + account_name + ".csv",
+        "r",
+        encoding="UTF-8",
+    ) as user_data:
+        fetch_credentials = csv.reader(user_data)
+        for _, password, key in fetch_credentials:
+            decrypted_password = cryptocode.decrypt(password, key)
+            copy = console.input(
+                Text(
+                    f"\nYour password is: {decrypted_password}\nPress 'c' to copy this password: ",
+                    style="u #DFDFDE",
+                )
             )
-        )
-        match copy:
-            case "c":
-                pyperclip.copy(decrypted_password)
-                print("copied")
+
+            match copy:
+                case "c":
+                    pyperclip.copy(decrypted_password)
+                    console.print("Password copied to your clipboard", style="#CF0A0A")
+    sys.exit(1)
 
 
 if __name__ == "__main__":
