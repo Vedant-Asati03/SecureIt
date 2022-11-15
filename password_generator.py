@@ -110,7 +110,7 @@ if __name__ == "__main__":
             master_password = console.input(
                 Text("Enter master password to access data: ", style="#B4B897")
             )
-            # create_master_password(master_password)
+            create_master_password(master_password)
             master_password_path = os.join("MasterPassword", "master_password.txt")
 
             with open(master_password_path, "r", encoding="UTF-8") as anonymous:
