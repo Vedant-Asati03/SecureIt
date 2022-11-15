@@ -84,13 +84,12 @@ def create_master_password(master_password: str):
     try:
         os.mkdir("MasterPassword")
     except FileExistsError:
-        pass
-    create_dir = os.path.join("MasterPassword", "master_password.txt")
-    with open(create_dir, "w", encoding="UTF-8") as anonymous:
-        hashed_master_password = hashlib.sha256(
-            master_password.encode("UTF-8")
-        ).hexdigest()
-        anonymous.write(hashed_master_password)
+        create_dir = os.path.join("MasterPassword", "master_password.txt")
+        with open(create_dir, "w", encoding="UTF-8") as anonymous:
+            hashed_master_password = hashlib.sha256(
+                master_password.encode("UTF-8")
+            ).hexdigest()
+            anonymous.write(hashed_master_password)
 
 
 if __name__ == "__main__":

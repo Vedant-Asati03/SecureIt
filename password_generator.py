@@ -108,10 +108,38 @@ if __name__ == "__main__":
 
         case "V":
             master_password = console.input(
-                Text("Enter master password to access data: ", style="#B4B897")
+                Text(
+                    "Enter master_password to access data or press 'c' to change master_password: ",
+                    style="#B4B897",
+                )
             )
             create_master_password(master_password)
             master_password_path = os.join("MasterPassword", "master_password.txt")
+
+            # if master_password == "c":
+            #     with open(master_password_path, "r", encoding="UTF-8") as anonymous:
+            #         verify_old_password = console.input(
+            #             Text(
+            #                 "Enter old master_password to authenticate yourself: ",
+            #                 style="#B4B897",
+            #             )
+            #         )
+            #         if (
+            #             hashlib.sha256(verify_old_password.encode("UTF-8")).hexdigest()
+            #             == anonymous.read()
+            #         ):
+            #             new_masterpassword = console.input(
+            #                 Text(
+            #                     "Enter new master_password: ",
+            #                     style="#B4B897",
+            #                 )
+            #             )
+            #             create_master_password(new_masterpassword)
+            #             console.print(
+            #                 "Successfully changed master_password", style="#CF0A0A"
+            #             )
+            #         else:
+            #             console.print("Worng master_password", style="#CF0A0A")
 
             with open(master_password_path, "r", encoding="UTF-8") as anonymous:
                 if (
