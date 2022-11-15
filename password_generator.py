@@ -1,15 +1,21 @@
 """
 password generator
 """
-
+import os.path as os
 import random
 import string
 import sys
+import hashlib
 import pyperclip
 import cryptocode
 from rich.text import Text
 from rich.console import Console
-from sign_in import create_account, check_existing_account, read_userdata
+from accounts_manager import (
+    create_account,
+    check_existing_account,
+    read_userdata,
+    create_master_password,
+)
 
 
 console = Console()
@@ -104,8 +110,14 @@ if __name__ == "__main__":
             master_password = console.input(
                 Text("Enter master password to access data: ", style="#B4B897")
             )
-            match master_password:
-                case "":
+            # create_master_password(master_password)
+            master_password_path = os.join("MasterPassword", "master_password.txt")
+
+            with open(master_password_path, "r", encoding="UTF-8") as anonymous:
+                if (
+                    hashlib.sha256(master_password.encode("UTF-8")).hexdigest()
+                    == anonymous.read()
+                ):
                     view_account = (
                         (console.input(Text("Enter account_name: ", style="#B4B897")))
                         .removesuffix(".csv")
@@ -116,5 +128,5 @@ if __name__ == "__main__":
                     except:
                         console.print("Account not found", style="#CF0A0A")
 
-                case _:
-                    sys.exit(1)
+                else:
+                    console.print("Worng master_password", style="#CF0A0A")

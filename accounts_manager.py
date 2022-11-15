@@ -1,15 +1,21 @@
 """
 creates new user
 """
+import os
 import sys
 import csv
+import hashlib
 from rich.console import Console
 from rich.text import Text
 import cryptocode
 import pyperclip
 
-
 console = Console()
+
+try:
+    os.mkdir("accounts_passwordmanager")
+except FileExistsError:
+    pass
 
 
 def main():
@@ -23,7 +29,7 @@ def create_account(account_name: str, password: str, key: str):
     creates account
     """
     with open(
-        "C:\\Users\\lenovo\\accounts_passwordmanager\\" + account_name + ".csv",
+        os.path.join("accounts_passwordmanager", account_name + ".csv"),
         "a",
         encoding="UTF-8",
     ) as user_data:
@@ -39,7 +45,7 @@ def check_existing_account(account_name: str):
     checks for existing users
     """
     with open(
-        "C:\\Users\\lenovo\\accounts_passwordmanager\\" + account_name + ".csv",
+        os.path.join("accounts_passwordmanager", account_name + ".csv"),
         "r",
         encoding="UTF-8",
     ) as _:
@@ -51,7 +57,7 @@ def read_userdata(account_name: str):
     this function lets user to view their saved passwords
     """
     with open(
-        "C:\\Users\\lenovo\\accounts_passwordmanager\\" + account_name + ".csv",
+        os.path.join("accounts_passwordmanager", account_name + ".csv"),
         "r",
         encoding="UTF-8",
     ) as user_data:
@@ -69,8 +75,20 @@ def read_userdata(account_name: str):
                 case "c":
                     pyperclip.copy(decrypted_password)
                     console.print("Password copied to your clipboard", style="#CF0A0A")
-    sys.exit(1)
 
 
+def create_master_password(master_password: str):
+    """
+    docstring
+    """
+    os.mkdir("MasterPassword")
+    create_dir = os.path.join("MasterPassword", "master_password.txt")
+    with open(create_dir, "w", encoding="UTF-8") as anonymous:
+        hashed_master_password = hashlib.sha256(
+            master_password.encode("UTF-8")
+        ).hexdigest()
+        anonymous.write(hashed_master_password)
+
+    
 if __name__ == "__main__":
     main()

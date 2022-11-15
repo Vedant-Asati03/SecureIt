@@ -8,11 +8,12 @@ This is a password manager to manage all your passwords and not only this, it ca
 
 # Features
 
-* Manages your passwords in a ```json file```, and keep them safe
+* Manages your passwords in a ```csv file```, and keep them safe
 * Generates pin/ password
 * Copies passwords automatically for you
 * Stores your credentials
 * Let's you view your credentials anytime
+* Ask's for a master password before letting you view them
 
 # How It Works
 
