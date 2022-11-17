@@ -26,7 +26,7 @@ https://user-images.githubusercontent.com/109758134/201980657-d2acf12a-e4a2-45bd
 
 For changing your master password
 
-![HowToChangeMaster_password](../../../D:/PYTHON%20REVISION/Passwords_Manager/assets/HowToChangeMaster_password.png)
+HowToChangeMaster_password.png
 
 Write '*c*' to change your master password.
 Your password will be updated
