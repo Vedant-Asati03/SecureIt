@@ -1,7 +1,7 @@
 """
 password generator
 """
-import os.path as os
+import os
 import random
 import string
 import sys
@@ -16,14 +16,6 @@ from accounts_manager import (
     read_userdata,
     create_master_password,
 )
-
-
-console = Console()
-
-# Generates a random Key
-KEY = ""
-for _ in range(10):
-    KEY += str(random.randint(0, 9))
 
 
 def main():
@@ -89,6 +81,14 @@ def generates_password(password_length):
 
 
 if __name__ == "__main__":
+    console = Console()
+
+    master_password_path = os.path.join("MasterPassword", "master_password.txt")
+    # Generates a random Key
+    KEY = ""
+    for _ in range(10):
+        KEY += str(random.randint(0, 9))
+
     ask_user = console.input(
         Text("Do you want to login[y/n] or view existing account[v]: ", style="#B4B897")
     ).upper()
@@ -108,14 +108,37 @@ if __name__ == "__main__":
 
         case "V":
             master_password = console.input(
-                Text("Enter master password to access data: ", style="#B4B897")
+                Text(
+                    "\nEnter master password to access data\nPress 'c' to change master_password\n>>> ",
+                    style="#B4B897",
+                )
             )
-            master_password_path = os.join("MasterPassword", "master_password.txt")
+            if master_password == "c":
+                verify_user = console.input(
+                    Text("Enter old master_password: ", style="#B4B897")
+                )
+                with open(
+                    master_password_path, "r", encoding="UTF-8"
+                ) as read_master_password:
+                    if (
+                        hashlib.sha256(verify_user.encode("UTF-8")).hexdigest()
+                        == read_master_password.read()
+                    ):
+                        new_master_password = console.input(
+                            Text("Enter new master_password: ", style="#B4B897")
+                        )
+                        create_master_password(new_master_password)
+                        console.print(
+                            "Master_password changed successfully", style="#CF0A0A"
+                        )
+                        sys.exit()
 
-            with open(master_password_path, "r", encoding="UTF-8") as anonymous:
+            with open(
+                master_password_path, "r", encoding="UTF-8"
+            ) as read_master_password:
                 if (
                     hashlib.sha256(master_password.encode("UTF-8")).hexdigest()
-                    == anonymous.read()
+                    == read_master_password.read()
                 ):
                     view_account = (
                         (console.input(Text("Enter account_name: ", style="#B4B897")))

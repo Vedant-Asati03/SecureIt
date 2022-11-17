@@ -13,7 +13,7 @@ import pyperclip
 console = Console()
 
 try:
-    os.mkdir("accounts_passwordmanager")
+    os.mkdir("Accounts")
 except FileExistsError:
     pass
 
@@ -29,7 +29,7 @@ def create_account(account_name: str, password: str, key: str):
     creates account
     """
     with open(
-        os.path.join("accounts_passwordmanager", account_name + ".csv"),
+        os.path.join("Accounts", account_name + ".csv"),
         "a",
         encoding="UTF-8",
     ) as user_data:
@@ -45,7 +45,7 @@ def check_existing_account(account_name: str):
     checks for existing users
     """
     with open(
-        os.path.join("accounts_passwordmanager", account_name + ".csv"),
+        os.path.join("Accounts", account_name + ".csv"),
         "r",
         encoding="UTF-8",
     ) as _:
@@ -57,7 +57,7 @@ def read_userdata(account_name: str):
     this function lets user to view their saved passwords
     """
     with open(
-        os.path.join("accounts_passwordmanager", account_name + ".csv"),
+        os.path.join("Accounts", account_name + ".csv"),
         "r",
         encoding="UTF-8",
     ) as user_data:
@@ -86,11 +86,11 @@ def create_master_password(master_password: str):
     except FileExistsError:
         pass
     create_dir = os.path.join("MasterPassword", "master_password.txt")
-    with open(create_dir, "w", encoding="UTF-8") as anonymous:
+    with open(create_dir, "w", encoding="UTF-8") as read_master_password:
         hashed_master_password = hashlib.sha256(
             master_password.encode("UTF-8")
         ).hexdigest()
-        anonymous.write(hashed_master_password)
+        read_master_password.write(hashed_master_password)
 
 
 if __name__ == "__main__":
