@@ -19,13 +19,13 @@ This is a password manager to manage all your passwords and not only this, it ca
 
 # How It Works
 
-![HowToChangeMaster_password](https://user-images.githubusercontent.com/109758134/202367504-45ed4903-ced2-4204-bcd5-e4b24a721e2f.png)
+https://user-images.githubusercontent.com/109758134/202367645-7b160617-8a1a-429d-86db-fd0ff700657d.mp4
 
 # Changing Master Password
 
 For changing your master password
 
-HowToChangeMaster_password.png
+![HowToChangeMaster_password](https://user-images.githubusercontent.com/109758134/202367504-45ed4903-ced2-4204-bcd5-e4b24a721e2f.png)
 
 Write '*c*' to change your master password.
 Your password will be updated
