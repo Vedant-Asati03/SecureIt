@@ -2,7 +2,9 @@
 
 # About
 
-This is a password manager to manage all your passwords and not only this, it can generate them too. We remember your passwords so you don't have to
+This is a password manager to manage all your passwords and not only this, it can generate them too. We remember your passwords so you don't have to.
+
+*Your default Master Password is set -* **password**
 
 **It has authentication, so only you can view your credential data**
 
