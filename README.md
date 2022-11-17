@@ -19,9 +19,17 @@ This is a password manager to manage all your passwords and not only this, it ca
 
 # How It Works
 
-
 https://user-images.githubusercontent.com/109758134/201980657-d2acf12a-e4a2-45bd-a9fb-bfa6a17e9e90.mp4
 
+
+# Changing Master Password
+
+For changing your master password
+
+![](../../../D:/PYTHON%20REVISION/Passwords_Manager/assets/HowToChangeMaster_password.png)
+
+Write '*c*' to change your master password.
+Your password will be updated
 
 # Installation
 
