@@ -19,8 +19,7 @@ This is a password manager to manage all your passwords and not only this, it ca
 
 # How It Works
 
-https://user-images.githubusercontent.com/109758134/201980657-d2acf12a-e4a2-45bd-a9fb-bfa6a17e9e90.mp4
-
+![HowToChangeMaster_password](https://user-images.githubusercontent.com/109758134/202367504-45ed4903-ced2-4204-bcd5-e4b24a721e2f.png)
 
 # Changing Master Password
 
