@@ -17,7 +17,6 @@ try:
 except FileExistsError:
     pass
 
-
 def main():
     """
     ...
@@ -28,8 +27,9 @@ def create_account(account_name: str, password: str, key: str):
     """
     creates account
     """
+    path = os.path.join("Accounts", account_name + ".csv")
     with open(
-        os.path.join("Accounts", account_name + ".csv"),
+        os.path.expanduser(path),
         "a",
         encoding="UTF-8",
     ) as user_data:
@@ -44,8 +44,9 @@ def check_existing_account(account_name: str):
     """
     checks for existing users
     """
+    path = os.path.join("Accounts", account_name + ".csv")
     with open(
-        os.path.join("Accounts", account_name + ".csv"),
+        os.path.expanduser(path),
         "r",
         encoding="UTF-8",
     ) as _:
@@ -56,8 +57,9 @@ def read_userdata(account_name: str):
     """
     this function lets user to view their saved passwords
     """
+    path = os.path.join("Accounts", account_name + ".csv")
     with open(
-        os.path.join("Accounts", account_name + ".csv"),
+        os.path.expanduser(path),
         "r",
         encoding="UTF-8",
     ) as user_data:
@@ -77,16 +79,17 @@ def read_userdata(account_name: str):
                     console.print("Password copied to your clipboard", style="#CF0A0A")
 
 
-def create_master_password(master_password: str):
+def change_master_password(master_password: str):
     """
-    docstring
+    This function changes the master_password
     """
     try:
-        os.mkdir("MasterPassword")
+        os.mkdir("Master_Password")
     except FileExistsError:
         pass
-    create_dir = os.path.join("MasterPassword", "master_password.txt")
-    with open(create_dir, "w", encoding="UTF-8") as read_master_password:
+    create_dir = os.path.join("Master_Password", "master_password.txt")
+
+    with open(os.path.expanduser(create_dir), "w+", encoding="UTF-8") as read_master_password:
         hashed_master_password = hashlib.sha256(
             master_password.encode("UTF-8")
         ).hexdigest()

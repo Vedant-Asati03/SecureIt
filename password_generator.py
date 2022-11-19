@@ -11,10 +11,10 @@ import cryptocode
 from rich.text import Text
 from rich.console import Console
 from accounts_manager import (
+    change_master_password,
     create_account,
     check_existing_account,
     read_userdata,
-    create_master_password,
 )
 
 
@@ -83,7 +83,24 @@ def generates_password(password_length):
 if __name__ == "__main__":
     console = Console()
 
-    master_password_path = os.path.join("MasterPassword", "master_password.txt")
+    try:
+        os.mkdir("Master_Password")
+    except FileExistsError:
+        pass
+    master_password_path = os.path.join("Master_Password", "master_password.txt")
+
+    if "master_password.txt" not in os.listdir(os.path.expanduser("Master_Password")):
+        with open(
+            os.path.expanduser(master_password_path), "w", encoding="UTF-8"
+        ) as write_master_password:
+            create_master_password = console.input(
+                Text("Create a master_password: ", style="#B4B897")
+            ).encode("UTF-8")
+            write_master_password.write(
+                hashlib.sha256(create_master_password).hexdigest()
+            )
+            console.print("Master_password created successfully!\n", style="#F49D1A")
+
     # Generates a random Key
     KEY = ""
     for _ in range(10):
@@ -118,7 +135,7 @@ if __name__ == "__main__":
                     Text("Enter old master_password: ", style="#B4B897")
                 )
                 with open(
-                    master_password_path, "r", encoding="UTF-8"
+                    os.path.expanduser(master_password_path), "r", encoding="UTF-8"
                 ) as read_master_password:
                     if (
                         hashlib.sha256(verify_user.encode("UTF-8")).hexdigest()
@@ -127,14 +144,14 @@ if __name__ == "__main__":
                         new_master_password = console.input(
                             Text("Enter new master_password: ", style="#B4B897")
                         )
-                        create_master_password(new_master_password)
+                        change_master_password(new_master_password)
                         console.print(
-                            "Master_password changed successfully", style="#CF0A0A"
+                            "Master_password changed successfully", style="#82CD47"
                         )
                         sys.exit()
 
             with open(
-                master_password_path, "r", encoding="UTF-8"
+                os.path.expanduser(master_password_path), "r", encoding="UTF-8"
             ) as read_master_password:
                 if (
                     hashlib.sha256(master_password.encode("UTF-8")).hexdigest()
