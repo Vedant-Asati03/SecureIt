@@ -11,6 +11,7 @@ import cryptocode
 from rich.text import Text
 from rich.console import Console
 from accounts_manager import (
+    add_user_data,
     change_master_password,
     create_account,
     check_existing_account,
@@ -107,7 +108,10 @@ if __name__ == "__main__":
         KEY += str(random.randint(0, 9))
 
     ask_user = console.input(
-        Text("Do you want to login[y/n] or view existing account[v]: ", style="#B4B897")
+        Text(
+            "Do you want to create_account[y/n] | view existing account[v] | save your password[s]: ",
+            style="#B4B897",
+        )
     ).upper()
     match ask_user:
 
@@ -122,6 +126,17 @@ if __name__ == "__main__":
 
         case "N" | "":
             main()
+
+        case "S":
+            account_name = (
+                console.input(Text("Enter account name: ", style="#B4B897"))
+                .removesuffix(".csv")
+                .upper()
+            )
+            save_password = console.input(
+                Text("Enter your password: ", style="#B4B897")
+            )
+            add_user_data(account_name, cryptocode.encrypt(save_password, KEY), KEY)
 
         case "V":
             master_password = console.input(

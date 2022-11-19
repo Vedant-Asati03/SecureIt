@@ -17,6 +17,7 @@ try:
 except FileExistsError:
     pass
 
+
 def main():
     """
     ...
@@ -32,9 +33,9 @@ def create_account(account_name: str, password: str, key: str):
         os.path.expanduser(path),
         "a",
         encoding="UTF-8",
-    ) as user_data:
+    ) as users_data:
         # json.dump({username: password}, user_data, indent=4)
-        structure = csv.writer(user_data)
+        structure = csv.writer(users_data)
         structure.writerow([account_name, password, key])
         print("Successfull login")
         sys.exit()
@@ -55,7 +56,7 @@ def check_existing_account(account_name: str):
 
 def read_userdata(account_name: str):
     """
-    this function lets user to view their saved passwords
+    This function lets user to view their saved passwords
     """
     path = os.path.join("Accounts", account_name + ".csv")
     with open(
@@ -79,6 +80,20 @@ def read_userdata(account_name: str):
                     console.print("Password copied to your clipboard", style="#CF0A0A")
 
 
+def add_user_data(account_name: str, user_password: str, key: str):
+    """
+    This function adds userdata
+    """
+    path = os.path.join("Accounts", account_name + ".csv")
+    with open(os.path.expanduser(path), "w", encoding="UTF-8") as add_users_data:
+        data = csv.writer(add_users_data)
+        data.writerow([account_name, user_password, key])
+        console.print(
+            f"Saved password with account_name: {account_name}\n",
+            style="#B9E937",
+        )
+
+
 def change_master_password(master_password: str):
     """
     This function changes the master_password
@@ -89,7 +104,9 @@ def change_master_password(master_password: str):
         pass
     create_dir = os.path.join("Master_Password", "master_password.txt")
 
-    with open(os.path.expanduser(create_dir), "w+", encoding="UTF-8") as read_master_password:
+    with open(
+        os.path.expanduser(create_dir), "w+", encoding="UTF-8"
+    ) as read_master_password:
         hashed_master_password = hashlib.sha256(
             master_password.encode("UTF-8")
         ).hexdigest()
