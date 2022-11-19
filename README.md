@@ -14,6 +14,7 @@ This is a password manager to manage all your passwords and not only this, it ca
 * Stores your credentials
 * Let's you view your credentials anytime
 * Ask's for a master password before letting you view them
+* You can save your own passwords
 
 # How It Works
 
