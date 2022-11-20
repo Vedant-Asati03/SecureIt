@@ -78,7 +78,7 @@ def read_userdata(account_name: str):
                 case "c":
                     pyperclip.copy(decrypted_password)
                     console.print("Password copied to your clipboard", style="#CF0A0A")
-
+                    sys.exit()
 
 def add_user_data(account_name: str, user_password: str, key: str):
     """
@@ -89,7 +89,7 @@ def add_user_data(account_name: str, user_password: str, key: str):
         data = csv.writer(add_users_data)
         data.writerow([account_name, user_password, key])
         console.print(
-            f"Saved password with account_name: {account_name}\n",
+            f"\nSaved password with account_name: {account_name}\n",
             style="#B9E937",
         )
 
