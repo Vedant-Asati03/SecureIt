@@ -176,7 +176,9 @@ if __name__ == "__main__":
                     count = 0
                     for account in os.listdir(os.path.join("Accounts")):
                         count += 1
-                        console.print(f"{count}. {account}", style="#F0FF42")
+                        console.print(
+                            f"{count}. {account.removesuffix('.csv')}", style="#F0FF42"
+                        )
                     view_account = (
                         (console.input(Text("\nEnter account_name: ", style="#B4B897")))
                         .removesuffix(".csv")
