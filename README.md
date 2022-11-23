@@ -1,4 +1,4 @@
-# 🔐SureIt
+# 🔐SecureIt
 
 # About
 
