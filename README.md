@@ -1,8 +1,8 @@
-# Passwords_Manager
+# 🔐SureIt
 
 # About
 
-This is a password manager to manage all your passwords and not only this, it can generate them too. We remember your passwords so you don't have to.
+SureIt is a password manager to manage all your passwords and not only this, it can generate them too.
 
 **It has authentication, so only you can view your credential data**
 
@@ -30,6 +30,9 @@ Write '*c*' to change your master password.
 Your password will be updated
 
 # Installation
+
+
+Install all required packages using this command
 
 ```sh
 pip install -r requirements.txt

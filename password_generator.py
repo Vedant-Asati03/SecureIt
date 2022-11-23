@@ -144,8 +144,8 @@ if __name__ == "__main__":
                     "\nEnter master password to access data\nPress 'c' to change master_password\n>>> ",
                     style="#B4B897",
                 )
-            )
-            if master_password == "c":
+            ).upper()
+            if master_password == "C":
                 verify_user = console.input(
                     Text("Enter old master_password: ", style="#B4B897")
                 )
@@ -173,11 +173,11 @@ if __name__ == "__main__":
                     == read_master_password.read()
                 ):
                     console.print("\nYour saved accounts:\n", style="b u #B3FFAE")
-                    count = 0
+                    index = 0
                     for account in os.listdir(os.path.join("Accounts")):
-                        count += 1
+                        index += 1
                         console.print(
-                            f"{count}. {account.removesuffix('.csv')}", style="#F0FF42"
+                            f"{index}. {account.removesuffix('.csv')}", style="#F0FF42"
                         )
                     view_account = (
                         (console.input(Text("\nEnter account_name: ", style="#B4B897")))
