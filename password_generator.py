@@ -95,12 +95,12 @@ if __name__ == "__main__":
             os.path.expanduser(master_password_path), "w", encoding="UTF-8"
         ) as write_master_password:
             create_master_password = console.input(
-                Text("Create a master_password: ", style="#B4B897")
+                Text("Create a master password: ", style="#B4B897")
             ).encode("UTF-8")
             write_master_password.write(
                 hashlib.sha256(create_master_password).hexdigest()
             )
-            console.print("Master_password created successfully!\n", style="#F49D1A")
+            console.print("Master password created successfully!\n", style="#F49D1A")
 
     # Generates a random Key
     KEY = ""
@@ -117,7 +117,7 @@ if __name__ == "__main__":
 
         case "Y":
             account_name = console.input(
-                Text("Enter a account_name to continue: ", style="#B4B897")
+                Text("Enter a account name to continue: ", style="#B4B897")
             ).upper()
             try:
                 check_existing_account(account_name)
@@ -141,13 +141,13 @@ if __name__ == "__main__":
         case "V":
             master_password = console.input(
                 Text(
-                    "\nEnter master password to access data\nPress 'c' to change master_password\n>>> ",
+                    "\nEnter master password to access data\nPress 'c' to change master password\n>>> ",
                     style="#B4B897",
                 )
             )
             if master_password == "c":
                 verify_user = console.input(
-                    Text("Enter old master_password: ", style="#B4B897")
+                    Text("Enter old master password: ", style="#B4B897")
                 )
                 with open(
                     os.path.expanduser(master_password_path), "r", encoding="UTF-8"
@@ -161,7 +161,7 @@ if __name__ == "__main__":
                         )
                         change_master_password(new_master_password)
                         console.print(
-                            "Master_password changed successfully", style="#82CD47"
+                            "Master password changed successfully", style="#82CD47"
                         )
                         sys.exit()
 
@@ -180,7 +180,7 @@ if __name__ == "__main__":
                             f"{index}. {account.removesuffix('.csv')}", style="#F0FF42"
                         )
                     view_account = (
-                        (console.input(Text("\nEnter account_name: ", style="#B4B897")))
+                        (console.input(Text("\nEnter account name: ", style="#B4B897")))
                         .removesuffix(".csv")
                         .upper()
                     )
@@ -190,4 +190,4 @@ if __name__ == "__main__":
                         console.print("Account not found", style="#CF0A0A")
 
                 else:
-                    console.print("Worng master_password", style="#CF0A0A")
+                    console.print("Wrong master password", style="#CF0A0A")

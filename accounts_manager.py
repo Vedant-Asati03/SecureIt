@@ -80,6 +80,7 @@ def read_userdata(account_name: str):
                     console.print("Password copied to your clipboard", style="#CF0A0A")
                     sys.exit()
 
+
 def add_user_data(account_name: str, user_password: str, key: str):
     """
     This function adds userdata
@@ -89,7 +90,7 @@ def add_user_data(account_name: str, user_password: str, key: str):
         data = csv.writer(add_users_data)
         data.writerow([account_name, user_password, key])
         console.print(
-            f"\nSaved password with account_name: {account_name}\n",
+            f"\nSaved password with account name: {account_name}\n",
             style="#B9E937",
         )
 
