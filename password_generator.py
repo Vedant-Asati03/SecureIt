@@ -126,50 +126,52 @@ if __name__ == "__main__":
                 console.print("Master password changed successfully", style="#82CD47")
                 sys.exit()
 
-    # Generates a random Key
-    KEY = ""
-    for _ in range(10):
-        KEY += str(random.randint(0, 9))
+    with open(
+        os.path.expanduser(master_password_path), "r", encoding="UTF-8"
+    ) as read_master_password:
+        if (
+            hashlib.sha256(master_password.encode("UTF-8")).hexdigest()
+            == read_master_password.read()
+        ):
+            # Generates a random Key
+            KEY = ""
+            for _ in range(10):
+                KEY += str(random.randint(0, 9))
 
-    ask_user = console.input(
-        Text(
-            "Do you want to create_account[y/n] | view existing account[v] | save your password[s]: ",
-            style="#B4B897",
-        )
-    ).upper()
-    match ask_user:
-
-        case "Y":
-            account_name = console.input(
-                Text("Enter a account name to continue: ", style="#B4B897")
+            ask_user = console.input(
+                Text(
+                    "Do you want to create_account[y/n] | view existing account[v] | save your password[s]: ",
+                    style="#B4B897",
+                )
             ).upper()
-            try:
-                check_existing_account(account_name)
-            except:
-                main()
+            match ask_user:
 
-        case "N" | "":
-            main()
+                case "Y":
+                    account_name = console.input(
+                        Text("Enter a account name to continue: ", style="#B4B897")
+                    ).upper()
+                    try:
+                        check_existing_account(account_name)
+                    except:
+                        main()
 
-        case "S":
-            account_name = (
-                console.input(Text("Enter account name: ", style="#B4B897"))
-                .removesuffix(".csv")
-                .upper()
-            )
-            save_password = console.input(
-                Text("Enter your password: ", style="#B4B897")
-            )
-            add_user_data(account_name, cryptocode.encrypt(save_password, KEY), KEY)
+                case "N" | "":
+                    main()
 
-        case "V":
-            with open(
-                os.path.expanduser(master_password_path), "r", encoding="UTF-8"
-            ) as read_master_password:
-                if (
-                    hashlib.sha256(master_password.encode("UTF-8")).hexdigest()
-                    == read_master_password.read()
-                ):
+                case "S":
+                    account_name = (
+                        console.input(Text("Enter account name: ", style="#B4B897"))
+                        .removesuffix(".csv")
+                        .upper()
+                    )
+                    save_password = console.input(
+                        Text("Enter your password: ", style="#B4B897")
+                    )
+                    add_user_data(
+                        account_name, cryptocode.encrypt(save_password, KEY), KEY
+                    )
+
+                case "V":
                     console.print("\nYour saved accounts:\n", style="b u #B3FFAE")
                     index = 0
                     for account in os.listdir(os.path.join("Accounts")):
@@ -187,5 +189,5 @@ if __name__ == "__main__":
                     except:
                         console.print("Account not found", style="#CF0A0A")
 
-                else:
-                    console.print("Wrong master password", style="#CF0A0A")
+        else:
+            console.print("Wrong master password", style="#CF0A0A")
