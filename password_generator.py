@@ -10,6 +10,7 @@ import pyperclip
 import cryptocode
 from rich.text import Text
 from rich.console import Console
+from rich.table import Table
 from accounts_manager import (
     add_user_data,
     change_master_password,
@@ -89,6 +90,7 @@ def generates_password(password_length):
 
 if __name__ == "__main__":
     console = Console()
+    table = Table(show_header=True, header_style="bold magenta")
 
     try:
         os.mkdir("Master_Password")
@@ -179,12 +181,14 @@ if __name__ == "__main__":
 
                 case "V":
                     console.print("\nYour saved accounts:\n", style="b u #B3FFAE")
+                    table.add_column("Index", width=10, justify="left")
+                    table.add_column("Account name", width=50, justify="center")
                     index = 0
                     for account in os.listdir(os.path.join("Accounts")):
                         index += 1
-                        console.print(
-                            f"{index}. {account.removesuffix('.csv')}", style="#F0FF42"
-                        )
+                        table.add_row(str(index), account.removesuffix(".csv"))
+                        table.add_section()
+                    console.print(table)
                     view_account = (
                         (console.input(Text("\nEnter account name: ", style="#B4B897")))
                         .removesuffix(".csv")
