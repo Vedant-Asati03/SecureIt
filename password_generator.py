@@ -144,8 +144,8 @@ if __name__ == "__main__":
                     "\nEnter master password to access data\nPress 'c' to change master_password\n>>> ",
                     style="#B4B897",
                 )
-            ).upper()
-            if master_password == "C":
+            )
+            if master_password == "c":
                 verify_user = console.input(
                     Text("Enter old master_password: ", style="#B4B897")
                 )
