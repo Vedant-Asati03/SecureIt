@@ -32,16 +32,22 @@ def main():
     )
     password_length = int(console.input(Text("Length of password: ", style="#B4B897")))
 
-    if password_length < 8:
-        print("Read instructions carefully!")
-        sys.exit(1)
-
     match password_type:
 
         case "1":
+
+            if password_length < 4:
+                print("Read instructions carefully!")
+                sys.exit(1)
+
             generates_pin(password_length)
 
         case "2":
+
+            if password_length < 8:
+                print("Read instructions carefully!")
+                sys.exit(1)
+
             generates_password(password_length)
 
 
