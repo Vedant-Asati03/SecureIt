@@ -102,6 +102,30 @@ if __name__ == "__main__":
             )
             console.print("Master password created successfully!\n", style="#F49D1A")
 
+    master_password = console.input(
+        Text(
+            "\nEnter master password to access data\nPress 'c' to change master password\n>>> ",
+            style="#B4B897",
+        )
+    )
+    if master_password == "c":
+        verify_user = console.input(
+            Text("Enter old master password: ", style="#B4B897")
+        )
+        with open(
+            os.path.expanduser(master_password_path), "r", encoding="UTF-8"
+        ) as read_master_password:
+            if (
+                hashlib.sha256(verify_user.encode("UTF-8")).hexdigest()
+                == read_master_password.read()
+            ):
+                new_master_password = console.input(
+                    Text("Enter new master_password: ", style="#B4B897")
+                )
+                change_master_password(new_master_password)
+                console.print("Master password changed successfully", style="#82CD47")
+                sys.exit()
+
     # Generates a random Key
     KEY = ""
     for _ in range(10):
@@ -139,32 +163,6 @@ if __name__ == "__main__":
             add_user_data(account_name, cryptocode.encrypt(save_password, KEY), KEY)
 
         case "V":
-            master_password = console.input(
-                Text(
-                    "\nEnter master password to access data\nPress 'c' to change master password\n>>> ",
-                    style="#B4B897",
-                )
-            )
-            if master_password == "c":
-                verify_user = console.input(
-                    Text("Enter old master password: ", style="#B4B897")
-                )
-                with open(
-                    os.path.expanduser(master_password_path), "r", encoding="UTF-8"
-                ) as read_master_password:
-                    if (
-                        hashlib.sha256(verify_user.encode("UTF-8")).hexdigest()
-                        == read_master_password.read()
-                    ):
-                        new_master_password = console.input(
-                            Text("Enter new master_password: ", style="#B4B897")
-                        )
-                        change_master_password(new_master_password)
-                        console.print(
-                            "Master password changed successfully", style="#82CD47"
-                        )
-                        sys.exit()
-
             with open(
                 os.path.expanduser(master_password_path), "r", encoding="UTF-8"
             ) as read_master_password:
