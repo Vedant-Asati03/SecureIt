@@ -11,6 +11,7 @@ import cryptocode
 from rich.text import Text
 from rich.console import Console
 from rich.table import Table
+from pick import pick
 from accounts_manager import (
     add_user_data,
     change_master_password,
@@ -181,21 +182,14 @@ if __name__ == "__main__":
 
                 case "V":
                     console.print("\nYour saved accounts:\n", style="b u #B3FFAE")
-                    table.add_column("Index", width=10, justify="left")
-                    table.add_column("Account name", width=50, justify="center")
-                    index = 0
+                    INDEX = 0
+                    accounts_list = []
                     for account in os.listdir(os.path.join("Accounts")):
-                        index += 1
-                        table.add_row(str(index), account.removesuffix(".csv"))
-                        table.add_section()
-                    console.print(table)
-                    view_account = (
-                        (console.input(Text("\nEnter account name: ", style="#B4B897")))
-                        .removesuffix(".csv")
-                        .upper()
-                    )
+                        INDEX += 1
+                        accounts_list.append(account)
+                    selected_account, _ = pick(accounts_list)
                     try:
-                        read_userdata(view_account)
+                        read_userdata(selected_account)
                     except:
                         console.print("Account not found", style="#CF0A0A")
 

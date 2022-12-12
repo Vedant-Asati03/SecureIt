@@ -58,7 +58,7 @@ def read_userdata(account_name: str):
     """
     This function lets user to view their saved passwords
     """
-    path = os.path.join("Accounts", account_name + ".csv")
+    path = os.path.join("Accounts", account_name)
     with open(
         os.path.expanduser(path),
         "r",
