@@ -181,7 +181,7 @@ if __name__ == "__main__":
                     )
 
                 case "V":
-                    console.print("\nYour saved accounts:\n", style="b u #B3FFAE")
+                    console.print("\nYour saved account:\n", style="b u #B3FFAE")
                     INDEX = 0
                     accounts_list = []
                     for account in os.listdir(os.path.join("Accounts")):
