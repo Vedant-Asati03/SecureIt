@@ -10,19 +10,6 @@ from rich.text import Text
 import cryptocode
 import pyperclip
 
-console = Console()
-
-try:
-    os.mkdir("Accounts")
-except FileExistsError:
-    pass
-
-
-def main():
-    """
-    ...
-    """
-
 
 def create_account(account_name: str, password: str, key: str):
     """
@@ -34,7 +21,6 @@ def create_account(account_name: str, password: str, key: str):
         "a",
         encoding="UTF-8",
     ) as users_data:
-        # json.dump({username: password}, user_data, indent=4)
         structure = csv.writer(users_data)
         structure.writerow([account_name, password, key])
         print("Successfull login")
@@ -115,4 +101,9 @@ def change_master_password(master_password: str):
 
 
 if __name__ == "__main__":
-    main()
+    console = Console()
+
+    try:
+        os.mkdir("Accounts")
+    except FileExistsError:
+        pass
