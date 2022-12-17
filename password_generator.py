@@ -117,6 +117,7 @@ if __name__ == "__main__":
             style="#B4B897",
         )
     )
+
     if master_password == "c":
         verify_user = console.input(
             Text("Enter old master password: ", style="#B4B897")
