@@ -182,10 +182,9 @@ if __name__ == "__main__":
 
                 case "V":
                     console.print("\nYour saved account:\n", style="b u #B3FFAE")
-                    INDEX = 0
                     accounts_list = []
+
                     for account in os.listdir(os.path.join("Accounts")):
-                        INDEX += 1
                         accounts_list.append(account)
                     selected_account, _ = pick(accounts_list)
                     try:

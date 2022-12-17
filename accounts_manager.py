@@ -10,6 +10,13 @@ from rich.text import Text
 import cryptocode
 import pyperclip
 
+console = Console()
+
+try:
+    os.mkdir("Accounts")
+except FileExistsError:
+    pass
+
 
 def create_account(account_name: str, password: str, key: str):
     """
@@ -98,12 +105,3 @@ def change_master_password(master_password: str):
             master_password.encode("UTF-8")
         ).hexdigest()
         read_master_password.write(hashed_master_password)
-
-
-if __name__ == "__main__":
-    console = Console()
-
-    try:
-        os.mkdir("Accounts")
-    except FileExistsError:
-        pass
