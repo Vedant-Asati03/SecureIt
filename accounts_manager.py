@@ -5,10 +5,11 @@ import os
 import sys
 import csv
 import hashlib
-from rich.console import Console
-from rich.text import Text
 import cryptocode
 import pyperclip
+import keyboard
+from rich.console import Console
+
 
 console = Console()
 
@@ -60,18 +61,16 @@ def read_userdata(account_name: str):
         fetch_credentials = csv.reader(user_data)
         for _, password, key in fetch_credentials:
             decrypted_password = cryptocode.decrypt(password, key)
-            copy = console.input(
-                Text(
-                    f"\nYour password is: {decrypted_password}\nPress 'c' to copy this password: ",
+            console.print(
+                    f"\nYour password is: {decrypted_password}\nPress 'c' to copy this password",
                     style="u #DFDFDE",
                 )
-            )
+            keyboard.wait("c")
 
-            match copy:
-                case "c":
-                    pyperclip.copy(decrypted_password)
-                    console.print("Password copied to your clipboard", style="#CF0A0A")
-                    sys.exit()
+            if keyboard.is_pressed("c"):
+                pyperclip.copy(decrypted_password)
+                console.print("Password copied to your clipboard", style="#CF0A0A")
+                sys.exit()
 
 
 def add_user_data(account_name: str, user_password: str, key: str):
