@@ -72,6 +72,9 @@ def read_userdata(account_name: str):
                 console.print("Password copied to your clipboard", style="#CF0A0A")
                 sys.exit()
 
+            elif keyboard.is_pressed("e | q"):
+                sys.exit()
+
 
 def add_user_data(account_name: str, user_password: str, key: str):
     """

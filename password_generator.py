@@ -1,24 +1,27 @@
 """
 password generator
 """
-import os
-import random
-import string
-import sys
-import hashlib
-import pyperclip
-import cryptocode
-from rich.text import Text
-from rich.console import Console
-from rich.table import Table
-from pick import pick
-from accounts_manager import (
-    add_user_data,
-    change_master_password,
-    create_account,
-    check_existing_account,
-    read_userdata,
-)
+try:
+    import os
+    import random
+    import string
+    import sys
+    import hashlib
+    import pyperclip
+    import cryptocode
+    from rich.text import Text
+    from rich.console import Console
+    from rich.table import Table
+    from pick import pick
+    from accounts_manager import (
+        add_user_data,
+        change_master_password,
+        create_account,
+        check_existing_account,
+        read_userdata,
+    )
+except ImportError:
+    print("Import Error!")
 
 
 def main():
@@ -150,7 +153,7 @@ if __name__ == "__main__":
 
             ask_user = console.input(
                 Text(
-                    "Do you want to create_account[y/n] | view existing account[v] | save your password[s]: ",
+                    "Do you want to create_account[y/n] | view existing account[v] | save your password[s] | delete an account[d]\n>>>",
                     style="#B4B897",
                 )
             ).upper()
@@ -192,6 +195,18 @@ if __name__ == "__main__":
                         read_userdata(selected_account)
                     except:
                         console.print("Account not found", style="#CF0A0A")
+
+                case "D":
+                    accounts_list = []
+
+                    for account in os.listdir(os.path.join("Accounts")):
+                        accounts_list.append(account)
+                    selected_account, _ = pick(accounts_list)
+
+                    os.remove(os.path.join("Accounts", selected_account))
+                    console.print(
+                        f"Removed Account: {selected_account}", style="#CF0A0A"
+                    )
 
         else:
             console.print("Wrong master password", style="#CF0A0A")
