@@ -1,6 +1,9 @@
 """
 password generator
 """
+import time
+
+
 try:
     import os
     import random
@@ -120,11 +123,14 @@ if __name__ == "__main__":
             style="#B4B897",
         )
     )
+    sys.stdout.write("\033[F")
 
     if master_password == "c":
         verify_user = console.input(
             Text("Enter old master password: ", style="#B4B897")
         )
+        time.sleep(1)
+        sys.stdout.write("\033[F")
         with open(
             os.path.expanduser(master_password_path), "r", encoding="UTF-8"
         ) as read_master_password:
@@ -135,6 +141,8 @@ if __name__ == "__main__":
                 new_master_password = console.input(
                     Text("Enter new master_password: ", style="#B4B897")
                 )
+                time.sleep(1)
+                sys.stdout.write("\033[F")
                 change_master_password(new_master_password)
                 console.print("Master password changed successfully", style="#82CD47")
                 sys.exit()
