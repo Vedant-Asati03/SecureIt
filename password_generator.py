@@ -1,21 +1,24 @@
 """
 password generator
 """
-import time
-
 
 try:
     import os
+    import sys
+    import time
     import random
     import string
-    import sys
     import hashlib
     import pyperclip
+    import subprocess
     import cryptocode
-    from rich.text import Text
-    from rich.console import Console
-    from rich.table import Table
+
     from pick import pick
+    from platform import system
+    from rich.text import Text
+    from rich.table import Table
+    from rich.console import Console
+
     from accounts_manager import (
         add_user_data,
         change_master_password,
@@ -23,6 +26,7 @@ try:
         check_existing_account,
         read_userdata,
     )
+
 except ImportError:
     print("Import Error!")
 
@@ -123,7 +127,8 @@ if __name__ == "__main__":
             style="#B4B897",
         )
     )
-    sys.stdout.write("\033[F")
+    clear_src = "cls" if system().lower().startswith("win") else "clear"
+    subprocess.call(clear_src, shell=True)
 
     if master_password == "c":
         verify_user = console.input(
