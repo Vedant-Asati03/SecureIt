@@ -17,7 +17,6 @@ try:
     from pick import pick
     from platform import system
     from rich.text import Text
-    from rich.table import Table
     from rich.console import Console
 
     from accounts_manager import (
@@ -108,18 +107,22 @@ def generates_password(password_length):
 
 if __name__ == "__main__":
     console = Console()
-    table = Table(show_header=True, header_style="bold magenta")
+    CLRSRC = "cls" if system().lower().startswith("win") else "clear"
 
     try:
-        os.mkdir("Master_Password")
+        os.makedirs(
+            os.path.join(os.path.expanduser("~"), "SECUREIT", "MASTER-PASSWORD")
+        )
     except FileExistsError:
         pass
-    master_password_path = os.path.join("Master_Password", "master_password.txt")
+    master_password_path = os.path.join(
+        os.path.expanduser("~"), "SECUREIT", "MASTER-PASSWORD", "MASTER-PASSWORD.txt"
+    )
 
-    if "master_password.txt" not in os.listdir(os.path.expanduser("Master_Password")):
-        with open(
-            os.path.expanduser(master_password_path), "w", encoding="UTF-8"
-        ) as write_master_password:
+    if "MASTER-PASSWORD.txt" not in os.listdir(
+        os.path.join(os.path.expanduser("~"), "SECUREIT", "MASTER-PASSWORD")
+    ):
+        with open(master_password_path, "w", encoding="UTF-8") as write_master_password:
             create_master_password = console.input(
                 Text("Create a master password: ", style="#B4B897")
             ).encode("UTF-8")
@@ -127,6 +130,7 @@ if __name__ == "__main__":
                 hashlib.sha256(create_master_password).hexdigest()
             )
             console.print("Master password created successfully!\n", style="#F49D1A")
+            subprocess.call(CLRSRC, shell=True)
 
     master_password = console.input(
         Text(
@@ -134,18 +138,14 @@ if __name__ == "__main__":
             style="#B4B897",
         )
     )
-    CLRSRC = "cls" if system().lower().startswith("win") else "clear"
     subprocess.call(CLRSRC, shell=True)
 
     if master_password == "c":
         verify_user = console.input(
             Text("Enter old master password: ", style="#B4B897")
         )
-        time.sleep(1)
-        sys.stdout.write("\033[F")
-        with open(
-            os.path.expanduser(master_password_path), "r", encoding="UTF-8"
-        ) as read_master_password:
+        subprocess.call(CLRSRC, shell=True)
+        with open(master_password_path, "r", encoding="UTF-8") as read_master_password:
             if (
                 hashlib.sha256(verify_user.encode("UTF-8")).hexdigest()
                 == read_master_password.read()
@@ -153,15 +153,11 @@ if __name__ == "__main__":
                 new_master_password = console.input(
                     Text("Enter new master_password: ", style="#B4B897")
                 )
-                time.sleep(1)
-                sys.stdout.write("\033[F")
+                subprocess.call(CLRSRC, shell=True)
                 change_master_password(new_master_password)
                 console.print("Master password changed successfully", style="#82CD47")
-                sys.exit()
 
-    with open(
-        os.path.expanduser(master_password_path), "r", encoding="UTF-8"
-    ) as read_master_password:
+    with open(master_password_path, "r", encoding="UTF-8") as read_master_password:
         if (
             hashlib.sha256(master_password.encode("UTF-8")).hexdigest()
             == read_master_password.read()
@@ -190,7 +186,7 @@ if __name__ == "__main__":
                         ).upper()
                         try:
                             check_existing_account(account_name)
-                        except:
+                        except Exception:
                             main()
 
                     case "N" | "":
@@ -210,26 +206,52 @@ if __name__ == "__main__":
                         )
 
                     case "V":
-                        console.print("\nYour saved account:\n", style="b u #B3FFAE")
-                        accounts_list = []
 
-                        for account in os.listdir(os.path.join("Accounts")):
-                            accounts_list.append(account)
-                        selected_account, _ = pick(accounts_list)
                         try:
-                            read_userdata(selected_account)
-                        except:
-                            console.print("Account not found", style="#CF0A0A")
-                            time.sleep(1)
+                            accounts_list = []
+
+                            for account in os.listdir(
+                                os.path.join(
+                                    os.path.expanduser("~"), "SECUREIT", "ACCOUNTS"
+                                )
+                            ):
+                                accounts_list.append(account)
+                            selected_account, _ = pick(accounts_list)
+
+                            console.print(
+                                f"\nAccount Name: {selected_account.removesuffix('.csv')}\n",
+                                style="b u #B3FFAE",
+                            )
+                            try:
+                                read_userdata(selected_account)
+                            except Exception:
+                                console.print(
+                                    f"Account {selected_account} Not Found",
+                                    style="#CF0A0A",
+                                )
+                                time.sleep(0.3)
+                        except Exception:
+                            console.print("No Accounts Found!")
 
                     case "D":
                         accounts_list = []
 
-                        for account in os.listdir(os.path.join("Accounts")):
+                        for account in os.listdir(
+                            os.path.join(
+                                os.path.expanduser("~"), "SECUREIT", "ACCOUNTS"
+                            )
+                        ):
                             accounts_list.append(account)
                         selected_account, _ = pick(accounts_list)
 
-                        os.remove(os.path.join("Accounts", selected_account))
+                        os.remove(
+                            os.path.join(
+                                os.path.expanduser("~"),
+                                "SECUREIT",
+                                "ACCOUNTS",
+                                selected_account,
+                            )
+                        )
                         console.print(
                             f"Removed Account: {selected_account}", style="#CF0A0A"
                         )
