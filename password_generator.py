@@ -9,6 +9,7 @@ try:
     import random
     import string
     import hashlib
+    import keyboard
     import pyperclip
     import subprocess
     import cryptocode
@@ -75,6 +76,9 @@ def generates_pin(pin_length):
         f"Your PIN is: [u #DFDFDE]{pin}[/u #DFDFDE]\n\n[u #24A19C]Note: Your PIN is copied to your clipboard[/u #24A19C]\n",
         style="#B4B897",
     )
+    if keyboard.read_key():
+        subprocess.call(CLRSRC, shell=True)
+
     match ask_user:
         case "Y":
             create_account(account_name, cryptocode.encrypt(pin, KEY), KEY)
@@ -94,6 +98,9 @@ def generates_password(password_length):
         f"Your password is: [u #DFDFDE]{password}[/u #DFDFDE]\n\n[u #24A19C]Note: Your PIN is copied to your clipboard[/u #24A19C]\n",
         style="#B4B897",
     )
+    if keyboard.read_key():
+        subprocess.call(CLRSRC, shell=True)
+
     match ask_user:
         case "Y":
             create_account(account_name, cryptocode.encrypt(password, KEY), KEY)
@@ -123,12 +130,12 @@ if __name__ == "__main__":
 
     master_password = console.input(
         Text(
-            "\nEnter master password to access data\nPress 'c' to change master password\n>>> ",
+            "\nEnter master password to access data\nPress 'c' to change master password\n",
             style="#B4B897",
         )
     )
-    clear_src = "cls" if system().lower().startswith("win") else "clear"
-    subprocess.call(clear_src, shell=True)
+    CLRSRC = "cls" if system().lower().startswith("win") else "clear"
+    subprocess.call(CLRSRC, shell=True)
 
     if master_password == "c":
         verify_user = console.input(
@@ -164,62 +171,70 @@ if __name__ == "__main__":
             for _ in range(10):
                 KEY += str(random.randint(0, 9))
 
-            ask_user = console.input(
-                Text(
-                    "Do you want to create_account[y/n] | view existing account[v] | save your password[s] | delete an account[d]\n>>>",
-                    style="#B4B897",
-                )
-            ).upper()
-            match ask_user:
+            while True:
 
-                case "Y":
-                    account_name = console.input(
-                        Text("Enter a account name to continue: ", style="#B4B897")
-                    ).upper()
-                    try:
-                        check_existing_account(account_name)
-                    except:
+                subprocess.call(CLRSRC, shell=True)
+                ask_user = console.input(
+                    Text(
+                        "Do you want to create_account[y/n] | view existing account[v] | save your password[s] | delete an account[d]\n",
+                        style="#B4B897",
+                    )
+                ).upper()
+                subprocess.call(CLRSRC, shell=True)
+
+                match ask_user:
+
+                    case "Y":
+                        account_name = console.input(
+                            Text("Enter a account name to continue: ", style="#B4B897")
+                        ).upper()
+                        try:
+                            check_existing_account(account_name)
+                        except:
+                            main()
+
+                    case "N" | "":
                         main()
 
-                case "N" | "":
-                    main()
+                    case "S":
+                        account_name = (
+                            console.input(Text("Enter account name: ", style="#B4B897"))
+                            .removesuffix(".csv")
+                            .upper()
+                        )
+                        save_password = console.input(
+                            Text("Enter your password: ", style="#B4B897")
+                        )
+                        add_user_data(
+                            account_name, cryptocode.encrypt(save_password, KEY), KEY
+                        )
 
-                case "S":
-                    account_name = (
-                        console.input(Text("Enter account name: ", style="#B4B897"))
-                        .removesuffix(".csv")
-                        .upper()
-                    )
-                    save_password = console.input(
-                        Text("Enter your password: ", style="#B4B897")
-                    )
-                    add_user_data(
-                        account_name, cryptocode.encrypt(save_password, KEY), KEY
-                    )
+                    case "V":
+                        console.print("\nYour saved account:\n", style="b u #B3FFAE")
+                        accounts_list = []
 
-                case "V":
-                    console.print("\nYour saved account:\n", style="b u #B3FFAE")
-                    accounts_list = []
+                        for account in os.listdir(os.path.join("Accounts")):
+                            accounts_list.append(account)
+                        selected_account, _ = pick(accounts_list)
+                        try:
+                            read_userdata(selected_account)
+                        except:
+                            console.print("Account not found", style="#CF0A0A")
+                            time.sleep(1)
 
-                    for account in os.listdir(os.path.join("Accounts")):
-                        accounts_list.append(account)
-                    selected_account, _ = pick(accounts_list)
-                    try:
-                        read_userdata(selected_account)
-                    except:
-                        console.print("Account not found", style="#CF0A0A")
+                    case "D":
+                        accounts_list = []
 
-                case "D":
-                    accounts_list = []
+                        for account in os.listdir(os.path.join("Accounts")):
+                            accounts_list.append(account)
+                        selected_account, _ = pick(accounts_list)
 
-                    for account in os.listdir(os.path.join("Accounts")):
-                        accounts_list.append(account)
-                    selected_account, _ = pick(accounts_list)
-
-                    os.remove(os.path.join("Accounts", selected_account))
-                    console.print(
-                        f"Removed Account: {selected_account}", style="#CF0A0A"
-                    )
+                        os.remove(os.path.join("Accounts", selected_account))
+                        console.print(
+                            f"Removed Account: {selected_account}", style="#CF0A0A"
+                        )
+                        time.sleep(1)
 
         else:
             console.print("Wrong master password", style="#CF0A0A")
+            time.sleep(1)
