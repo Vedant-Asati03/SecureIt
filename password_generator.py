@@ -2,33 +2,31 @@
 password generator
 """
 
-try:
-    import os
-    import sys
-    import time
-    import random
-    import string
-    import hashlib
-    import keyboard
-    import pyperclip
-    import subprocess
-    import cryptocode
+import os
+import sys
+import time
+import string
+import random
+import hashlib
+import subprocess
 
-    from pick import pick
-    from platform import system
-    from rich.text import Text
-    from rich.console import Console
+from platform import system
 
-    from accounts_manager import (
-        add_user_data,
-        change_master_password,
-        create_account,
-        check_existing_account,
-        read_userdata,
-    )
+import keyboard
+import pyperclip
+import cryptocode
 
-except ImportError:
-    print("Import Error!")
+from pick import pick
+from rich.text import Text
+from rich.console import Console
+
+from accounts_manager import (
+    add_user_data,
+    change_master_password,
+    create_account,
+    check_existing_account,
+    read_userdata,
+)
 
 
 def main():
