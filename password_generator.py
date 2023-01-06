@@ -109,16 +109,16 @@ if __name__ == "__main__":
 
     try:
         os.makedirs(
-            os.path.join(os.path.expanduser("~"), "SECUREIT", "MASTER-PASSWORD")
+            os.path.join(os.path.expanduser("~"), ".secureit", "master-password")
         )
     except FileExistsError:
         pass
     master_password_path = os.path.join(
-        os.path.expanduser("~"), "SECUREIT", "MASTER-PASSWORD", "MASTER-PASSWORD.txt"
+        os.path.expanduser("~"), ".secureit", "master-password", "master-password.txt"
     )
 
-    if "MASTER-PASSWORD.txt" not in os.listdir(
-        os.path.join(os.path.expanduser("~"), "SECUREIT", "MASTER-PASSWORD")
+    if "master-password.txt" not in os.listdir(
+        os.path.join(os.path.expanduser("~"), ".secureit", "master-password")
     ):
         with open(master_password_path, "w", encoding="UTF-8") as write_master_password:
             create_master_password = console.input(
@@ -210,7 +210,7 @@ if __name__ == "__main__":
 
                             for account in os.listdir(
                                 os.path.join(
-                                    os.path.expanduser("~"), "SECUREIT", "ACCOUNTS"
+                                    os.path.expanduser("~"), ".secureit", "accounts"
                                 )
                             ):
                                 accounts_list.append(account)
@@ -236,7 +236,7 @@ if __name__ == "__main__":
 
                         for account in os.listdir(
                             os.path.join(
-                                os.path.expanduser("~"), "SECUREIT", "ACCOUNTS"
+                                os.path.expanduser("~"), ".secureit", "accounts"
                             )
                         ):
                             accounts_list.append(account)
@@ -245,8 +245,8 @@ if __name__ == "__main__":
                         os.remove(
                             os.path.join(
                                 os.path.expanduser("~"),
-                                "SECUREIT",
-                                "ACCOUNTS",
+                                ".secureit",
+                                "accounts",
                                 selected_account,
                             )
                         )

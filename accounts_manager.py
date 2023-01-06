@@ -16,7 +16,7 @@ from rich.console import Console
 console = Console()
 
 try:
-    os.makedirs(os.path.join(os.path.expanduser("~"), "SECUREIT", "ACCOUNTS"))
+    os.makedirs(os.path.join(os.path.expanduser("~"), ".secureit", "accounts"))
 except FileExistsError:
     pass
 
@@ -26,7 +26,7 @@ def create_account(account_name: str, password: str, key: str):
     creates account
     """
     path = os.path.join(
-        os.path.expanduser("~"), "SECUREIT", "ACCOUNTS", account_name + ".csv"
+        os.path.expanduser("~"), ".secureit", "accounts", account_name + ".csv"
     )
     with open(
         path,
@@ -44,7 +44,7 @@ def check_existing_account(account_name: str):
     checks for existing users
     """
     path = os.path.join(
-        os.path.expanduser("~"), "SECUREIT", "ACCOUNTS", account_name + ".csv"
+        os.path.expanduser("~"), ".secureit", "accounts", account_name + ".csv"
     )
     with open(
         path,
@@ -58,7 +58,7 @@ def read_userdata(account_name: str):
     """
     This function lets user to view their saved passwords
     """
-    path = os.path.join(os.path.expanduser("~"), "SECUREIT", "ACCOUNTS", account_name)
+    path = os.path.join(os.path.expanduser("~"), ".secureit", "accounts", account_name)
     with open(
         path,
         "r",
@@ -86,7 +86,7 @@ def add_user_data(account_name: str, user_password: str, key: str):
     This function adds userdata
     """
     path = os.path.join(
-        os.path.expanduser("~"), "SECUREIT", "ACCOUNTS", account_name + ".csv"
+        os.path.expanduser("~"), ".secureit", "accounts", account_name + ".csv"
     )
     with open(path, "w", encoding="UTF-8") as add_users_data:
         data = csv.writer(add_users_data)
@@ -103,12 +103,12 @@ def change_master_password(master_password: str):
     """
     try:
         os.makedirs(
-            os.path.join(os.path.expanduser("~"), "SECUREIT", "MASTER-PASSWORD")
+            os.path.join(os.path.expanduser("~"), ".secureit", "master-password")
         )
     except FileExistsError:
         pass
     create_dir = os.path.join(
-        os.path.expanduser("~"), "SECUREIT", "MASTER-PASSWORD", "MASTER-PASSWORD.txt"
+        os.path.expanduser("~"), ".secureit", "master-password", "master-password.txt"
     )
 
     with open(create_dir, "w+", encoding="UTF-8") as read_master_password:
